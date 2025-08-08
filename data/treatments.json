@@ -1,0 +1,64 @@
+[
+  {
+    "title": "Eger Skin Clinic",
+    "description": "Noen av dataene som innhentes av denne leverandøren, innhentes for å kunne tilpasse og måle annonseringseffektiviteten. Noen av dataene som innhentes av denne leverandøren, innhentes for å kunne tilpasse og måle annonseringseffektiviteten. Eger Clinics er et sted man velger. Fordi man vil ha det beste. Det tryggeste. Det mest profesjonelle. Vi tilbyr et bredt utvalg av behandlinger innen hudpleie og estetiske behandlinger for alle behov.",
+    "benefits": [
+      "[#IABV2SETTINGS#]",
+      "Om Eger Group",
+      "Behandlinger",
+      "Jobb i Eger Group",
+      "Jobb hos oss",
+      "Klinikker\n\n\tKarl Johan\n\tSandvika\n\tMajorstuen",
+      "Biostimulerende behandlinger",
+      "Priser & Behandlinger"
+    ],
+    "prices": [],
+    "duration": "",
+    "skinConcerns": [],
+    "hasBookingCTA": true,
+    "images": [
+      "data:,",
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAC6SURBVHgBpdTdCcMgEAdwT/vk04EOkBG6QifpHH3rCF2hk3SVvBaEuoDYu4IgRRMv/iEkD/Hn+QnOuatS6gEAqDoJIQC/vfe594+m576FjAZKL6XXkSDiYox5UQFLXZEoNZJzXg9B/0hK6SKGWkiMcRVBewjnNIuURdIzyFBFo0jZPnoGqaMbCEqRJkSNIiFPCfILj7F1GLkySfvuqnFlShDxWesF6D76zF4jPJ/GWvum7/NRjBCegtsXQuuTY/odOJIAAAAASUVORK5CYII=",
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAC6SURBVHgBpdTdCcMgEAdwT/vk04EOkBG6QifpHH3rCF2hk3SVvBaEuoDYu4IgRRMv/iEkD/Hn+QnOuatS6gEAqDoJIQC/vfe594+m576FjAZKL6XXkSDiYox5UQFLXZEoNZJzXg9B/0hK6SKGWkiMcRVBewjnNIuURdIzyFBFo0jZPnoGqaMbCEqRJkSNIiFPCfILj7F1GLkySfvuqnFlShDxWesF6D76zF4jPJ/GWvum7/NRjBCegtsXQuuTY/odOJIAAAAASUVORK5CYII="
+    ],
+    "url": "https://egerskinclinic.no/behandlinger/hydrafacial",
+    "category": "specialized",
+    "suggestedCombinations": [],
+    "popularity": "medium"
+  },
+  {
+    "title": "Dermapen",
+    "description": "Noen av dataene som innhentes av denne leverandøren, innhentes for å kunne tilpasse og måle annonseringseffektiviteten. Noen av dataene som innhentes av denne leverandøren, innhentes for å kunne tilpasse og måle annonseringseffektiviteten. Behandlingen gir en fastere og glødende hud, og har god effekt på pigmenteringer, arr og fine linjer. Dermapen er også perfekt som vedlikeholdsbehandling etter andre behandlinger.",
+    "benefits": [
+      "[#IABV2SETTINGS#]",
+      "Om Eger Group",
+      "Behandlinger",
+      "Jobb i Eger Group",
+      "Jobb hos oss",
+      "Klinikker\n\n\tKarl Johan\n\tSandvika\n\tMajorstuen",
+      "Biostimulerende behandlinger",
+      "Priser & Behandlinger"
+    ],
+    "prices": [
+      "NOK\n\n45 ",
+      "NOK\n\n65 ",
+      "NOK\n\n75 "
+    ],
+    "duration": "15 min",
+    "skinConcerns": [
+      "pigmentering",
+      "arr",
+      "glød"
+    ],
+    "hasBookingCTA": true,
+    "images": [
+      "data:,",
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAC6SURBVHgBpdTdCcMgEAdwT/vk04EOkBG6QifpHH3rCF2hk3SVvBaEuoDYu4IgRRMv/iEkD/Hn+QnOuatS6gEAqDoJIQC/vfe594+m576FjAZKL6XXkSDiYox5UQFLXZEoNZJzXg9B/0hK6SKGWkiMcRVBewjnNIuURdIzyFBFo0jZPnoGqaMbCEqRJkSNIiFPCfILj7F1GLkySfvuqnFlShDxWesF6D76zF4jPJ/GWvum7/NRjBCegtsXQuuTY/odOJIAAAAASUVORK5CYII=",
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAC6SURBVHgBpdTdCcMgEAdwT/vk04EOkBG6QifpHH3rCF2hk3SVvBaEuoDYu4IgRRMv/iEkD/Hn+QnOuatS6gEAqDoJIQC/vfe594+m576FjAZKL6XXkSDiYox5UQFLXZEoNZJzXg9B/0hK6SKGWkiMcRVBewjnNIuURdIzyFBFo0jZPnoGqaMbCEqRJkSNIiFPCfILj7F1GLkySfvuqnFlShDxWesF6D76zF4jPJ/GWvum7/NRjBCegtsXQuuTY/odOJIAAAAASUVORK5CYII="
+    ],
+    "url": "https://egerskinclinic.no/behandlinger/dermapen",
+    "category": "specialized",
+    "suggestedCombinations": [],
+    "popularity": "medium"
+  }
+]

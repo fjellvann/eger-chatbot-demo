@@ -1,0 +1,153 @@
+{
+  "flow": {
+    "welcome": {
+      "id": "welcome",
+      "type": "message",
+      "message": "Hei! Velkommen til Eger Skin Clinic 👋\n\nJeg er her for å hjelpe deg med å finne den perfekte behandlingen for dine hudbehov.",
+      "next": "introduce"
+    },
+    "introduce": {
+      "id": "introduce",
+      "type": "quickReply",
+      "message": "Hva kan jeg hjelpe deg med i dag?",
+      "options": [
+        {
+          "text": "Jeg ønsker behandling for et hudproblem",
+          "value": "problem",
+          "next": "skinConcern"
+        },
+        {
+          "text": "Jeg vil forbedre hudens utseende",
+          "value": "improvement",
+          "next": "skinGoal"
+        },
+        {
+          "text": "Jeg er usikker og trenger veiledning",
+          "value": "guidance",
+          "next": "skinType"
+        },
+        {
+          "text": "Jeg vet hvilken behandling jeg vil ha",
+          "value": "specific",
+          "next": "treatmentCategory"
+        }
+      ]
+    },
+    "skinConcern": {
+      "id": "skinConcern",
+      "type": "multiSelect",
+      "message": "Hvilke hudproblemer ønsker du hjelp med? (Du kan velge flere)",
+      "options": [
+        { "text": "Akne/uren hud", "value": "akne" },
+        { "text": "Pigmentflekker", "value": "pigmentering" },
+        { "text": "Rynker/fine linjer", "value": "rynker" },
+        { "text": "Arr (aknearr eller andre)", "value": "arr" },
+        { "text": "Løs/slapp hud", "value": "løs-hud" },
+        { "text": "Rosacea/rødhet", "value": "rosacea" },
+        { "text": "Store porer", "value": "porer" },
+        { "text": "Tørr/dehydrert hud", "value": "tørrhet" }
+      ],
+      "next": "ageGroup"
+    },
+    "skinGoal": {
+      "id": "skinGoal",
+      "type": "multiSelect",
+      "message": "Hva er dine hudmål? (Du kan velge flere)",
+      "options": [
+        { "text": "Glødende hud", "value": "glød" },
+        { "text": "Anti-aging/forebygge aldring", "value": "aldring" },
+        { "text": "Jevnere hudtone", "value": "hudtone" },
+        { "text": "Mer volum/fylde", "value": "volum" },
+        { "text": "Strammere hud", "value": "hudstramming" },
+        { "text": "Naturlig foryngelse", "value": "foryngelse" },
+        { "text": "Redusere svetting", "value": "svetting" },
+        { "text": "Permanent hårfjerning", "value": "hårfjerning" }
+      ],
+      "next": "ageGroup"
+    },
+    "skinType": {
+      "id": "skinType",
+      "type": "quickReply",
+      "message": "Hvordan vil du beskrive din hudtype?",
+      "options": [
+        { "text": "Normal", "value": "normal", "next": "ageGroup" },
+        { "text": "Tørr", "value": "tørr", "next": "ageGroup" },
+        { "text": "Fet/oljete", "value": "fet", "next": "ageGroup" },
+        { "text": "Kombinert", "value": "kombinert", "next": "ageGroup" },
+        { "text": "Sensitiv", "value": "sensitiv", "next": "ageGroup" }
+      ]
+    },
+    "ageGroup": {
+      "id": "ageGroup",
+      "type": "quickReply",
+      "message": "Hvilken aldersgruppe tilhører du?",
+      "options": [
+        { "text": "Under 25 år", "value": "under25", "next": "experience" },
+        { "text": "25-35 år", "value": "25-35", "next": "experience" },
+        { "text": "36-45 år", "value": "36-45", "next": "experience" },
+        { "text": "46-55 år", "value": "46-55", "next": "experience" },
+        { "text": "Over 55 år", "value": "over55", "next": "experience" }
+      ]
+    },
+    "experience": {
+      "id": "experience",
+      "type": "quickReply",
+      "message": "Har du erfaring med kosmetiske behandlinger?",
+      "options": [
+        { "text": "Nei, dette er første gang", "value": "none", "next": "budget" },
+        { "text": "Litt erfaring", "value": "some", "next": "budget" },
+        { "text": "Ja, regelmessig", "value": "regular", "next": "budget" }
+      ]
+    },
+    "budget": {
+      "id": "budget",
+      "type": "quickReply",
+      "message": "Hva er ditt budsjett per behandling?",
+      "options": [
+        { "text": "Under 2000 kr", "value": "low", "next": "timeline" },
+        { "text": "2000-5000 kr", "value": "medium", "next": "timeline" },
+        { "text": "5000-10000 kr", "value": "high", "next": "timeline" },
+        { "text": "Pris er ikke viktig", "value": "unlimited", "next": "timeline" }
+      ]
+    },
+    "timeline": {
+      "id": "timeline",
+      "type": "quickReply",
+      "message": "Når ønsker du å starte behandling?",
+      "options": [
+        { "text": "Så snart som mulig", "value": "asap", "next": "recommendation" },
+        { "text": "Innen 2 uker", "value": "2weeks", "next": "recommendation" },
+        { "text": "Innen en måned", "value": "month", "next": "recommendation" },
+        { "text": "Jeg planlegger fremover", "value": "planning", "next": "recommendation" }
+      ]
+    },
+    "treatmentCategory": {
+      "id": "treatmentCategory",
+      "type": "quickReply",
+      "message": "Hvilken type behandling er du interessert i?",
+      "options": [
+        { "text": "Ansiktsbehandlinger", "value": "facial", "next": "specificTreatment" },
+        { "text": "Injeksjoner (Botox/Filler)", "value": "injectable", "next": "specificTreatment" },
+        { "text": "Laserbehandlinger", "value": "laser", "next": "specificTreatment" },
+        { "text": "Avanserte behandlinger", "value": "advanced", "next": "specificTreatment" },
+        { "text": "Kroppsbehandlinger", "value": "body", "next": "specificTreatment" }
+      ]
+    },
+    "recommendation": {
+      "id": "recommendation",
+      "type": "recommendation",
+      "message": "Basert på dine svar, anbefaler jeg følgende behandlinger:"
+    },
+    "booking": {
+      "id": "booking",
+      "type": "booking",
+      "message": "Flott valg! La oss hjelpe deg med å bestille time."
+    }
+  },
+  "responses": {
+    "typing": ["Analyserer dine behov...", "Finner beste behandlinger...", "Et øyeblikk..."],
+    "clarification": "Kan du fortelle meg litt mer om dine hudbehov?",
+    "noMatch": "Beklager, jeg forstod ikke helt. Kan du prøve igjen?",
+    "error": "Noe gikk galt. Vennligst prøv igjen eller kontakt oss direkte."
+  }
+}

@@ -1,0 +1,319 @@
+{
+  "categories": {
+    "facial": {
+      "name": "Ansiktsbehandlinger",
+      "description": "Profesjonelle ansiktsbehandlinger for alle hudtyper",
+      "treatments": [
+        {
+          "id": "hydrafacial",
+          "name": "HydraFacial",
+          "description": "Dyprensende ansiktsbehandling som renser, eksfolierer og fukter huden",
+          "duration": "30-60 min",
+          "priceRange": "1500-2500 kr",
+          "skinConcerns": ["porer", "glød", "fuktighet", "uren hud"],
+          "benefits": [
+            "Dyprengjøring av porene",
+            "Øyeblikkelig glød",
+            "Forbedret hudtekstur",
+            "Ingen nedetid"
+          ],
+          "popular": true,
+          "combinations": ["dermapen", "led-therapy"]
+        },
+        {
+          "id": "eger-facial",
+          "name": "Eger Skin Facial",
+          "description": "Skreddersydd ansiktsbehandling tilpasset din hudtype",
+          "duration": "60-90 min",
+          "priceRange": "1200-2000 kr",
+          "skinConcerns": ["alle hudtyper"],
+          "benefits": [
+            "Personlig tilpasset behandling",
+            "Profesjonell hudanalyse",
+            "Avslapning og velvære"
+          ]
+        }
+      ]
+    },
+    "advanced": {
+      "name": "Avanserte behandlinger",
+      "description": "Medisinsk-estetiske behandlinger for synlige resultater",
+      "treatments": [
+        {
+          "id": "dermapen",
+          "name": "Dermapen / Microneedling",
+          "description": "Kollagenstimulerende behandling med mikronåler",
+          "duration": "45-60 min",
+          "priceRange": "2000-3500 kr",
+          "skinConcerns": ["arr", "pigmentering", "rynker", "porer", "strekkmerker"],
+          "benefits": [
+            "Stimulerer kollagenproduksjon",
+            "Reduserer arr og pigmentering",
+            "Forbedrer hudens elastisitet",
+            "Minimal nedetid"
+          ],
+          "popular": true,
+          "combinations": ["prf", "chemical-peel"]
+        },
+        {
+          "id": "chemical-peel",
+          "name": "Chemical Peel",
+          "description": "Kjemisk peeling for fornyelse av huden",
+          "duration": "30-45 min",
+          "priceRange": "1500-3000 kr",
+          "skinConcerns": ["pigmentering", "akne", "solskade", "aldring"],
+          "benefits": [
+            "Fjerner døde hudceller",
+            "Reduserer pigmentflekker",
+            "Jevner ut hudtonen",
+            "Fornyer huden"
+          ]
+        },
+        {
+          "id": "prf",
+          "name": "PRF Stamcellebehandling",
+          "description": "Naturlig hudforyngelse med egne vekstfaktorer",
+          "duration": "60-90 min",
+          "priceRange": "3500-5000 kr",
+          "skinConcerns": ["aldring", "rynker", "volum", "hudkvalitet"],
+          "benefits": [
+            "100% naturlig behandling",
+            "Langvarige resultater",
+            "Forbedrer hudkvalitet",
+            "Stimulerer cellefornyelse"
+          ],
+          "combinations": ["dermapen", "profhilo"]
+        },
+        {
+          "id": "plasmapen",
+          "name": "Plasmapen",
+          "description": "Ikke-kirurgisk hudstramming med plasma",
+          "duration": "60-90 min",
+          "priceRange": "2500-6000 kr",
+          "skinConcerns": ["løs hud", "øyelokk", "rynker"],
+          "benefits": [
+            "Strammer løs hud",
+            "Ikke-kirurgisk øyelokksløft",
+            "Reduserer rynker",
+            "Langvarige resultater"
+          ]
+        }
+      ]
+    },
+    "laser": {
+      "name": "Laserbehandlinger",
+      "description": "Avanserte laserbehandlinger for ulike hudproblemer",
+      "treatments": [
+        {
+          "id": "fotona-5d",
+          "name": "Fotona 5D Facelift",
+          "description": "Revolusjonerende ikke-kirurgisk ansiktsløft med laser",
+          "duration": "60-90 min",
+          "priceRange": "4000-8000 kr",
+          "skinConcerns": ["aldring", "løs hud", "rynker", "volum"],
+          "benefits": [
+            "5-dimensjonal hudforyngelse",
+            "Strammer og løfter huden",
+            "Stimulerer kollagen",
+            "Ingen nedetid"
+          ],
+          "popular": true,
+          "combinations": ["profhilo", "filler"]
+        },
+        {
+          "id": "laser-hair",
+          "name": "Laser Hårfjerning",
+          "description": "Permanent hårreduksjon med moderne laser",
+          "duration": "15-60 min",
+          "priceRange": "500-3000 kr",
+          "skinConcerns": ["uønsket hårvekst"],
+          "benefits": [
+            "Permanent hårreduksjon",
+            "Smertefri behandling",
+            "Rask og effektiv",
+            "For alle hudtyper"
+          ],
+          "popular": true
+        },
+        {
+          "id": "sofwave",
+          "name": "Sofwave",
+          "description": "Ultralydbehandling for hudstramming",
+          "duration": "45-60 min",
+          "priceRange": "8000-15000 kr",
+          "skinConcerns": ["løs hud", "rynker", "aldring"],
+          "benefits": [
+            "Strammer huden naturlig",
+            "Én behandling holder i 12 måneder",
+            "FDA-godkjent",
+            "Synlige resultater"
+          ]
+        }
+      ]
+    },
+    "injectable": {
+      "name": "Injeksjonsbehandlinger",
+      "description": "Filler og muskelavslappende behandlinger",
+      "treatments": [
+        {
+          "id": "botox",
+          "name": "Botox / Muskelavslappende",
+          "description": "Reduserer mimikkriynker og forebygger nye",
+          "duration": "20-30 min",
+          "priceRange": "2500-6000 kr",
+          "skinConcerns": ["rynker", "mimikkrynker", "svetting"],
+          "benefits": [
+            "Glatter ut rynker",
+            "Forebygger nye rynker",
+            "Naturlig resultat",
+            "Varer 3-6 måneder"
+          ],
+          "popular": true,
+          "combinations": ["filler", "profhilo"]
+        },
+        {
+          "id": "filler",
+          "name": "Filler (Restylane/Belotero)",
+          "description": "Gjenoppretter volum og former ansiktstrekkene",
+          "duration": "30-45 min",
+          "priceRange": "3500-8000 kr",
+          "skinConcerns": ["volum", "lepper", "kinnben", "nasolabial"],
+          "benefits": [
+            "Øyeblikkelige resultater",
+            "Naturlig volum",
+            "Former ansiktstrekkene",
+            "Varer 6-18 måneder"
+          ],
+          "popular": true,
+          "combinations": ["botox", "profhilo"]
+        },
+        {
+          "id": "profhilo",
+          "name": "Profhilo",
+          "description": "Biostimulerende behandling for hudkvalitet",
+          "duration": "30 min",
+          "priceRange": "4000-6000 kr",
+          "skinConcerns": ["hudkvalitet", "elastisitet", "fuktighet", "aldring"],
+          "benefits": [
+            "Forbedrer hudkvalitet",
+            "Øker elastisitet",
+            "Naturlig glød",
+            "2 behandlinger holder i 6 måneder"
+          ],
+          "popular": true,
+          "combinations": ["botox", "filler", "dermapen"]
+        },
+        {
+          "id": "sculptra",
+          "name": "Sculptra",
+          "description": "Kollagenstimulerende volumberhandling",
+          "duration": "45 min",
+          "priceRange": "8000-12000 kr",
+          "skinConcerns": ["volum", "aldring", "hudkvalitet"],
+          "benefits": [
+            "Gradvis volumoppbygging",
+            "Stimulerer egen kollagenproduksjon",
+            "Naturlige resultater",
+            "Varer opptil 2 år"
+          ]
+        }
+      ]
+    },
+    "body": {
+      "name": "Kroppsbehandlinger",
+      "description": "Behandlinger for kropp og velvære",
+      "treatments": [
+        {
+          "id": "endermologie",
+          "name": "LPG Endermologie",
+          "description": "Cellulittbehandling og kroppsforming",
+          "duration": "45-60 min",
+          "priceRange": "1200-1800 kr",
+          "skinConcerns": ["cellulitt", "løs hud", "væskeansamling"],
+          "benefits": [
+            "Reduserer cellulitt",
+            "Strammer huden",
+            "Forbedrer sirkulasjon",
+            "Smertefri behandling"
+          ]
+        },
+        {
+          "id": "venus-freeze",
+          "name": "Venus Freeze",
+          "description": "Radiofrekvens for hudstramming på kropp",
+          "duration": "30-60 min",
+          "priceRange": "2000-3500 kr",
+          "skinConcerns": ["løs hud", "strekkmerker", "cellulitt"],
+          "benefits": [
+            "Strammer løs hud",
+            "Reduserer omkrets",
+            "Forbedrer hudtekstur",
+            "Behagelig behandling"
+          ]
+        }
+      ]
+    }
+  },
+  "skinConcerns": {
+    "akne": {
+      "description": "Uren hud og kviser",
+      "recommendedTreatments": ["chemical-peel", "dermapen", "hydrafacial", "led-therapy"],
+      "treatmentPlan": "Start med HydraFacial for dyprens, følg opp med Chemical Peel eller Dermapen"
+    },
+    "aldring": {
+      "description": "Alderstegn og rynker",
+      "recommendedTreatments": ["botox", "filler", "profhilo", "fotona-5d", "prf"],
+      "treatmentPlan": "Kombinasjon av Botox for mimikkrynker og Profhilo/Filler for volum og hudkvalitet"
+    },
+    "pigmentering": {
+      "description": "Pigmentflekker og ujevn hudtone",
+      "recommendedTreatments": ["chemical-peel", "dermapen", "laser"],
+      "treatmentPlan": "Chemical Peel eller laserbehandling for å lysne flekker"
+    },
+    "rynker": {
+      "description": "Fine linjer og dype rynker",
+      "recommendedTreatments": ["botox", "filler", "profhilo", "dermapen", "fotona-5d"],
+      "treatmentPlan": "Botox for dynamiske rynker, Filler for dype furer"
+    },
+    "løs-hud": {
+      "description": "Tap av elastisitet",
+      "recommendedTreatments": ["sofwave", "fotona-5d", "plasmapen", "profhilo"],
+      "treatmentPlan": "Sofwave eller Fotona for optimal hudstramming"
+    },
+    "arr": {
+      "description": "Aknearr eller andre arr",
+      "recommendedTreatments": ["dermapen", "chemical-peel", "laser"],
+      "treatmentPlan": "Serie med Dermapen-behandlinger for best resultat"
+    },
+    "volum": {
+      "description": "Volumtap i ansiktet",
+      "recommendedTreatments": ["filler", "sculptra", "profhilo", "prf"],
+      "treatmentPlan": "Filler for øyeblikkelig volum, Sculptra for gradvis oppbygging"
+    },
+    "hudkvalitet": {
+      "description": "Generell hudkvalitet og glød",
+      "recommendedTreatments": ["profhilo", "prf", "hydrafacial", "dermapen"],
+      "treatmentPlan": "Profhilo for total hudfornyelse, HydraFacial for vedlikehold"
+    }
+  },
+  "clinics": [
+    {
+      "name": "Karl Johan",
+      "address": "Karl Johans gate, Oslo",
+      "phone": "22 33 60 60",
+      "bookingUrl": "https://fixit.no/booking/2933"
+    },
+    {
+      "name": "Sandvika",
+      "address": "Sandvika",
+      "phone": "902 57 677",
+      "bookingUrl": "https://fixit.no/booking/2932"
+    },
+    {
+      "name": "Majorstuen",
+      "address": "Majorstuen, Oslo",
+      "phone": "23 21 54 00",
+      "bookingUrl": "https://fixit.no/booking/2958/behandlinger"
+    }
+  ]
+}
