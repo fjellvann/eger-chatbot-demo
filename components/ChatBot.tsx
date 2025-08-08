@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import { Send, Bot, X } from 'lucide-react'
+import { Send, ArrowLeft } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import treatmentCatalog from '@/data/treatment-catalog.json'
 import chatFlow from '@/data/chatbot-flow.json'
@@ -46,25 +46,14 @@ export default function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
   const [isTyping, setIsTyping] = useState(false)
-  const [currentStep, setCurrentStep] = useState('welcome')
+  const [currentStep, setCurrentStep] = useState('introduce')
   const [userProfile, setUserProfile] = useState<UserProfile>({
     concerns: [],
     goals: []
   })
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
-  const [isOpen, setIsOpen] = useState(true)
+  const [showChat, setShowChat] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    // Start conversation
-    const welcomeStep = chatFlow.flow.welcome
-    addBotMessage(welcomeStep.message)
-    setTimeout(() => {
-      const introduceStep = chatFlow.flow.introduce
-      addBotMessage(introduceStep.message, introduceStep.options)
-      setCurrentStep('introduce')
-    }, 1500)
-  }, [])
 
   useEffect(() => {
     // Auto scroll to bottom
@@ -98,6 +87,7 @@ export default function ChatBot() {
 
   const handleOptionClick = (option: Option) => {
     addUserMessage(option.text)
+    setShowChat(true)
     processUserChoice(option)
   }
 
@@ -116,6 +106,7 @@ export default function ChatBot() {
     
     setSelectedOptions([])
     setIsTyping(true)
+    setShowChat(true)
     
     setTimeout(() => {
       const nextStepId = chatFlow.flow[currentStep].next
@@ -158,13 +149,10 @@ export default function ChatBot() {
     if (step.type === 'recommendation' || nextStep === 'recommendation') {
       generateRecommendations()
     } else if (step.type === 'multiSelect') {
-      // For multi-select, show the options
-      addBotMessage(step.message, step.options)
-    } else if (step.type === 'quickReply') {
-      // For quick reply, show the options
-      addBotMessage(step.message, step.options)
+      // For multi-select, we'll handle it differently
+      setShowChat(false)
+      setIsTyping(false)
     } else {
-      // Default message type
       addBotMessage(step.message, step.options)
       // If there's a next step defined and no options, continue
       if (step.next && !step.options) {
@@ -190,7 +178,7 @@ export default function ChatBot() {
     
     setTimeout(() => {
       const recommendations = getPersonalizedRecommendations()
-      const message = `Basert på dine behov, anbefaler jeg disse behandlingene:\n\n`
+      const message = `Basert på dine behov, anbefaler jeg disse behandlingene:`
       addBotMessage(message, undefined, recommendations)
       
       // Add booking CTA after recommendations
@@ -239,16 +227,12 @@ export default function ChatBot() {
   }
 
   const addBookingCTA = () => {
-    const bookingMessage = `
-Ønsker du å bestille time for en av disse behandlingene?
+    const bookingMessage = `Ønsker du å bestille time for en av disse behandlingene?
 
-Vi har klinikker på Karl Johan, Sandvika og Majorstuen.
-
-Ring oss gjerne for en uforpliktende konsultasjon:
+Ring oss for en uforpliktende konsultasjon:
 📍 Karl Johan: 22 33 60 60
 📍 Sandvika: 902 57 677
-📍 Majorstuen: 23 21 54 00
-    `
+📍 Majorstuen: 23 21 54 00`
     addBotMessage(bookingMessage)
   }
 
@@ -265,35 +249,156 @@ Ring oss gjerne for en uforpliktende konsultasjon:
     }, 1000)
   }
 
-  if (!isOpen) {
+  // Initial screen
+  if (!showChat && messages.length === 0 && currentStep === 'introduce') {
+    const introduceStep = chatFlow.flow.introduce
     return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className="bg-stone-700 text-stone-50 rounded-full p-4 shadow-lg hover:bg-stone-800 transition-all duration-200"
-      >
-        <Bot size={24} />
-      </button>
+      <div className="w-full max-w-md min-h-[80vh] flex flex-col font-[family-name:var(--font-geist-sans)]">
+        {/* Avatar */}
+        <div className="flex justify-center mt-16 mb-10">
+          <div className="w-28 h-28 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full flex items-center justify-center shadow-sm">
+            <span className="text-5xl">✨</span>
+          </div>
+        </div>
+        
+        {/* Question */}
+        <div className="text-center px-8 mb-10">
+          <h1 className="text-2xl font-normal text-stone-800 mb-3">
+            Hva kan vi hjelpe deg med?
+          </h1>
+          <p className="text-stone-500 font-light text-sm">
+            Jeg ønsker å...
+          </p>
+        </div>
+        
+        {/* Options */}
+        <div className="flex-1 px-6 space-y-3">
+          {introduceStep.options?.map((option, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                setMessages([{
+                  id: Date.now().toString(),
+                  type: 'user',
+                  content: option.text,
+                  timestamp: new Date()
+                }])
+                setShowChat(true)
+                processUserChoice(option)
+              }}
+              className="w-full text-left px-6 py-4 bg-stone-50 border border-stone-200 rounded-full hover:bg-amber-50 hover:border-amber-200 transition-all duration-200 text-stone-700 font-light"
+            >
+              {option.text}
+            </button>
+          ))}
+        </div>
+        
+        {/* Continue button */}
+        <div className="px-6 py-8">
+          <button 
+            onClick={() => {
+              const firstOption = introduceStep.options?.[0]
+              if (firstOption) {
+                handleOptionClick(firstOption)
+              }
+            }}
+            className="w-full py-4 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 transition-all duration-200 shadow-md"
+          >
+            Fortsett
+          </button>
+        </div>
+      </div>
     )
   }
 
-  return (
-    <div className="w-full max-w-md h-[80vh] bg-stone-50 rounded-2xl shadow-2xl flex flex-col font-[family-name:var(--font-geist-sans)]">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-stone-700 to-stone-800 text-stone-50 p-5 rounded-t-2xl flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <Bot size={24} />
-          <div>
-            <h3 className="font-medium text-lg">Eger Skin Assistant</h3>
-            <p className="text-xs opacity-80 font-light">Vi hjelper deg med å finne rett behandling</p>
+  // Multi-select screen
+  if (!showChat && chatFlow.flow[currentStep]?.type === 'multiSelect') {
+    const step = chatFlow.flow[currentStep]
+    return (
+      <div className="w-full max-w-md min-h-[80vh] flex flex-col font-[family-name:var(--font-geist-sans)]">
+        {/* Header */}
+        <div className="px-6 pt-8 pb-6">
+          <button 
+            onClick={() => {
+              setShowChat(true)
+            }}
+            className="text-stone-400 hover:text-stone-600 transition-colors mb-6 flex items-center gap-2"
+          >
+            <ArrowLeft size={20} />
+            <span className="font-light">Tilbake</span>
+          </button>
+          
+          {/* Avatar */}
+          <div className="flex justify-center mb-8">
+            <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full flex items-center justify-center shadow-sm">
+              <span className="text-3xl">✨</span>
+            </div>
           </div>
+          
+          <h2 className="text-2xl font-normal text-stone-800 mb-3 text-center">
+            {step.message}
+          </h2>
+          <p className="text-stone-500 font-light text-sm text-center">
+            Velg alle som passer
+          </p>
         </div>
-        <button onClick={() => setIsOpen(false)} className="hover:opacity-70 transition-opacity">
-          <X size={20} />
-        </button>
+        
+        {/* Options */}
+        <div className="flex-1 px-6 py-2 space-y-3 overflow-y-auto">
+          {step.options?.map((option, idx) => (
+            <button
+              key={idx}
+              onClick={() => toggleOption(option.value)}
+              className={`w-full text-left px-6 py-4 rounded-full transition-all duration-200 font-light flex items-center justify-between ${
+                selectedOptions.includes(option.value)
+                  ? 'bg-stone-50 border-2 border-blue-500 text-stone-800'
+                  : 'bg-stone-50 border border-stone-200 text-stone-700 hover:bg-amber-50 hover:border-amber-200'
+              }`}
+            >
+              <span>{option.text}</span>
+              {selectedOptions.includes(option.value) && (
+                <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">✓</span>
+                </div>
+              )}
+            </button>
+          ))}
+        </div>
+        
+        {/* Continue button */}
+        <div className="px-6 py-8">
+          <button
+            onClick={handleMultiSelect}
+            disabled={selectedOptions.length === 0}
+            className={`w-full py-4 rounded-full font-medium transition-all duration-200 shadow-md ${
+              selectedOptions.length > 0
+                ? 'bg-blue-500 text-white hover:bg-blue-600'
+                : 'bg-stone-200 text-stone-400 cursor-not-allowed'
+            }`}
+          >
+            Fortsett
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Regular chat interface
+  return (
+    <div className="w-full max-w-md h-[80vh] bg-white rounded-3xl shadow-xl flex flex-col font-[family-name:var(--font-geist-sans)]">
+      {/* Simple Header */}
+      <div className="bg-stone-50 border-b border-stone-200 px-6 py-4 rounded-t-3xl flex items-center gap-3">
+        <div className="w-10 h-10 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full flex items-center justify-center">
+          <span className="text-xl">✨</span>
+        </div>
+        <div>
+          <h3 className="font-normal text-stone-800">Eger Assistant</h3>
+          <p className="text-xs text-stone-500 font-light">Vi hjelper deg</p>
+        </div>
       </div>
 
       {/* Messages */}
-      <ScrollArea className="flex-1 p-4" ref={scrollRef}>
+      <ScrollArea className="flex-1 p-6" ref={scrollRef}>
         <div className="space-y-4">
           {messages.map((message, messageIndex) => (
             <div
@@ -301,67 +406,41 @@ Ring oss gjerne for en uforpliktende konsultasjon:
               className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[80%] ${
+                className={`max-w-[85%] ${
                   message.type === 'user'
-                    ? 'bg-stone-600 text-stone-50 rounded-2xl rounded-br-md'
-                    : 'bg-white text-stone-800 rounded-2xl rounded-bl-md border border-stone-200'
-                } p-4 shadow-sm`}
+                    ? 'bg-blue-500 text-white rounded-3xl rounded-br-md'
+                    : 'bg-stone-50 text-stone-800 rounded-3xl rounded-bl-md'
+                } px-5 py-3 shadow-sm`}
               >
-                <div className="whitespace-pre-wrap">{message.content}</div>
+                <div className="whitespace-pre-wrap font-light text-sm">{message.content}</div>
                 
-                {/* Quick reply options - only show for the latest bot message */}
-                {message.options && messageIndex === messages.length - 1 && (
-                  <div className="mt-3 space-y-2">
-                    {chatFlow.flow[currentStep]?.type === 'multiSelect' ? (
-                      <>
-                        {message.options.map((option, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => toggleOption(option.value)}
-                            className={`block w-full text-left px-4 py-2.5 rounded-lg transition-all duration-200 text-sm font-light ${
-                              selectedOptions.includes(option.value)
-                                ? 'bg-stone-700 text-stone-50'
-                                : 'bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-200'
-                            }`}
-                          >
-                            {option.text} {selectedOptions.includes(option.value) && '✓'}
-                          </button>
-                        ))}
-                        {selectedOptions.length > 0 && (
-                          <button
-                            onClick={handleMultiSelect}
-                            className="block w-full px-4 py-2.5 bg-stone-700 text-stone-50 rounded-lg hover:bg-stone-800 transition-all duration-200 text-sm font-medium"
-                          >
-                            Fortsett med {selectedOptions.length} valg
-                          </button>
-                        )}
-                      </>
-                    ) : (
-                      message.options.map((option, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => handleOptionClick(option)}
-                          className="block w-full text-left px-4 py-2.5 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-all duration-200 text-sm font-light border border-stone-200"
-                        >
-                          {option.text}
-                        </button>
-                      ))
-                    )}
+                {/* Quick reply options */}
+                {message.options && messageIndex === messages.length - 1 && chatFlow.flow[currentStep]?.type !== 'multiSelect' && (
+                  <div className="mt-4 space-y-2">
+                    {message.options.map((option, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleOptionClick(option)}
+                        className="block w-full text-left px-5 py-3 bg-white text-stone-700 rounded-full hover:bg-amber-50 transition-all duration-200 text-sm font-light border border-stone-200"
+                      >
+                        {option.text}
+                      </button>
+                    ))}
                   </div>
                 )}
                 
                 {/* Treatment recommendations */}
                 {message.recommendations && (
-                  <div className="mt-3 space-y-3">
+                  <div className="mt-4 space-y-3">
                     {message.recommendations.map((treatment) => (
-                      <div key={treatment.id} className="bg-stone-50 rounded-lg p-4 shadow-sm border border-stone-200">
-                        <h4 className="font-medium text-stone-800">{treatment.name}</h4>
+                      <div key={treatment.id} className="bg-white rounded-2xl p-4 border border-amber-100">
+                        <h4 className="font-medium text-stone-800 text-sm">{treatment.name}</h4>
                         <p className="text-xs text-stone-600 mt-1 font-light">{treatment.description}</p>
-                        <div className="flex justify-between items-center mt-2">
-                          <span className="text-xs font-light text-stone-700">{treatment.priceRange}</span>
+                        <div className="flex justify-between items-center mt-3">
+                          <span className="text-xs font-light text-stone-600">{treatment.priceRange}</span>
                           {treatment.popular && (
-                            <span className="text-xs bg-stone-200 text-stone-700 px-2 py-1 rounded font-light">
-                              Populær
+                            <span className="text-xs bg-amber-100 text-stone-700 px-3 py-1 rounded-full font-light">
+                              Anbefalt
                             </span>
                           )}
                         </div>
@@ -375,11 +454,11 @@ Ring oss gjerne for en uforpliktende konsultasjon:
           
           {isTyping && (
             <div className="flex justify-start">
-              <div className="bg-white rounded-2xl rounded-bl-md p-3 border border-stone-200">
-                <div className="flex gap-1">
-                  <span className="w-2 h-2 bg-stone-400 rounded-full animate-bounce" />
-                  <span className="w-2 h-2 bg-stone-400 rounded-full animate-bounce delay-100" />
-                  <span className="w-2 h-2 bg-stone-400 rounded-full animate-bounce delay-200" />
+              <div className="bg-stone-50 rounded-3xl rounded-bl-md px-5 py-3">
+                <div className="flex gap-1.5">
+                  <span className="w-2 h-2 bg-amber-300 rounded-full animate-bounce" />
+                  <span className="w-2 h-2 bg-amber-300 rounded-full animate-bounce" style={{animationDelay: '0.1s'}} />
+                  <span className="w-2 h-2 bg-amber-300 rounded-full animate-bounce" style={{animationDelay: '0.2s'}} />
                 </div>
               </div>
             </div>
@@ -388,21 +467,21 @@ Ring oss gjerne for en uforpliktende konsultasjon:
       </ScrollArea>
 
       {/* Input */}
-      <div className="p-4 border-t border-stone-200 bg-white rounded-b-2xl">
-        <div className="flex gap-2">
+      <div className="p-4 border-t border-stone-200 bg-stone-50 rounded-b-3xl">
+        <div className="flex gap-3">
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
             placeholder="Skriv din melding..."
-            className="flex-1 px-4 py-2.5 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-400 font-light bg-stone-50"
+            className="flex-1 px-5 py-3 border border-stone-200 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-200 font-light bg-white text-sm"
           />
           <button
             onClick={handleSendMessage}
-            className="bg-stone-700 text-stone-50 p-2.5 rounded-lg hover:bg-stone-800 transition-all duration-200"
+            className="bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600 transition-all duration-200 shadow-md"
           >
-            <Send size={20} />
+            <Send size={18} />
           </button>
         </div>
       </div>
