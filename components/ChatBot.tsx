@@ -89,7 +89,16 @@ export default function ChatBot() {
 
   const handleOptionClick = (option: Option) => {
     addUserMessage(option.text)
-    setShowChat(true)
+    
+    // Check if next step is multiSelect before showing chat
+    const nextStepData = option.next ? chatFlow.flow[option.next as ChatFlowStep] : null
+    const isNextStepMultiSelect = nextStepData && 'type' in nextStepData && nextStepData.type === 'multiSelect'
+    
+    // Only show chat if next step is not multiSelect
+    if (!isNextStepMultiSelect) {
+      setShowChat(true)
+    }
+    
     processUserChoice(option)
   }
 
@@ -151,10 +160,12 @@ export default function ChatBot() {
     if ('type' in step && step.type === 'recommendation' || nextStep === 'recommendation') {
       generateRecommendations()
     } else if ('type' in step && step.type === 'multiSelect') {
-      // For multi-select, we'll handle it differently
+      // For multi-select, hide chat and stop typing indicator immediately
       setShowChat(false)
       setIsTyping(false)
     } else if ('message' in step) {
+      // Ensure chat is visible for message steps
+      setShowChat(true)
       addBotMessage(step.message, 'options' in step ? step.options : undefined)
       // If there's a next step defined and no options, continue
       if ('next' in step && step.next && !('options' in step)) {
