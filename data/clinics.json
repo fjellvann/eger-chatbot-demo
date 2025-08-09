@@ -1,0 +1,25 @@
+{
+  "clinics": [
+    {
+      "id": "oslo",
+      "name": "Eger Clinic Oslo",
+      "image": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400&h=300&fit=crop",
+      "address": "Bygdøy Allé 23, 0262 Oslo",
+      "bookingUrl": "https://egerskinclinic.no/book-oslo"
+    },
+    {
+      "id": "bergen",
+      "name": "Eger Clinic Bergen",
+      "image": "https://images.unsplash.com/photo-1629909615184-74f495363b67?w=400&h=300&fit=crop",
+      "address": "Torgallmenningen 8, 5014 Bergen",
+      "bookingUrl": "https://egerskinclinic.no/book-bergen"
+    },
+    {
+      "id": "stavanger",
+      "name": "Eger Clinic Stavanger",
+      "image": "https://images.unsplash.com/photo-1631248055158-80f74d121224?w=400&h=300&fit=crop",
+      "address": "Klubbgata 5, 4006 Stavanger",
+      "bookingUrl": "https://egerskinclinic.no/book-stavanger"
+    }
+  ]
+}

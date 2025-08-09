@@ -1,10 +1,11 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import { Send, ArrowLeft } from 'lucide-react'
+import { Send, ArrowLeft, X, MapPin } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import treatmentCatalog from '@/data/treatment-catalog.json'
 import chatFlow from '@/data/chatbot-flow.json'
+import clinicsData from '@/data/clinics.json'
 
 type ChatFlowStep = keyof typeof chatFlow.flow
 
@@ -55,6 +56,7 @@ export default function ChatBot() {
   })
   const [selectedOptions, setSelectedOptions] = useState<{value: string, text: string}[]>([])
   const [showChat, setShowChat] = useState(false)
+  const [showClinicModal, setShowClinicModal] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -264,11 +266,13 @@ export default function ChatBot() {
   const addBookingCTA = () => {
     const bookingMessage = `Ønsker du å bestille time for en av disse behandlingene?
 
-Ring oss for en uforpliktende konsultasjon:
-📍 Karl Johan: 22 33 60 60
-📍 Sandvika: 902 57 677
-📍 Majorstuen: 23 21 54 00`
+Velg din foretrukne klinikk for å booke en konsultasjon.`
     addBotMessage(bookingMessage)
+  }
+
+  const handleClinicSelect = (bookingUrl: string) => {
+    window.open(bookingUrl, '_blank')
+    setShowClinicModal(false)
   }
 
   const handleSendMessage = () => {
@@ -459,6 +463,16 @@ Ring oss for en uforpliktende konsultasjon:
               >
                 <div className="whitespace-pre-wrap font-light text-sm">{message.content}</div>
                 
+                {/* Booking button for CTA message */}
+                {message.content.includes('Velg din foretrukne klinikk') && messageIndex === messages.length - 1 && (
+                  <button
+                    onClick={() => setShowClinicModal(true)}
+                    className="mt-4 w-full py-3 px-5 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-all duration-200 font-medium text-sm shadow-md"
+                  >
+                    Velg klinikk og book time
+                  </button>
+                )}
+                
                 {/* Quick reply options */}
                 {message.options && messageIndex === messages.length - 1 && chatFlow.flow[currentStep]?.type !== 'multiSelect' && (
                   <div className="mt-4 space-y-2">
@@ -530,6 +544,55 @@ Ring oss for en uforpliktende konsultasjon:
           </button>
         </div>
       </div>
+
+      {/* Clinic Selection Modal */}
+      {showClinicModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+            {/* Modal Header */}
+            <div className="bg-stone-50 px-6 py-4 border-b border-stone-200 flex items-center justify-between">
+              <h2 className="text-xl font-medium text-stone-800">Velg din foretrukne klinikk</h2>
+              <button
+                onClick={() => setShowClinicModal(false)}
+                className="p-2 hover:bg-stone-200 rounded-full transition-colors"
+              >
+                <X size={20} className="text-stone-600" />
+              </button>
+            </div>
+            
+            {/* Clinics Grid */}
+            <div className="p-6">
+              <div className="grid md:grid-cols-3 gap-4">
+                {clinicsData.clinics.map((clinic) => (
+                  <button
+                    key={clinic.id}
+                    onClick={() => handleClinicSelect(clinic.bookingUrl)}
+                    className="group bg-white border border-stone-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-200"
+                  >
+                    <div className="aspect-[4/3] overflow-hidden bg-stone-100">
+                      <img
+                        src={clinic.image}
+                        alt={clinic.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-medium text-stone-800 text-lg mb-2">{clinic.name}</h3>
+                      <div className="flex items-start gap-2 text-stone-600">
+                        <MapPin size={16} className="mt-0.5 flex-shrink-0" />
+                        <p className="text-sm font-light">{clinic.address}</p>
+                      </div>
+                      <div className="mt-4 py-2 px-4 bg-blue-500 text-white rounded-full text-sm font-medium group-hover:bg-blue-600 transition-colors">
+                        Book time her
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
