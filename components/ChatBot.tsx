@@ -105,8 +105,13 @@ export default function ChatBot() {
   const handleMultiSelect = () => {
     if (selectedOptions.length === 0) return
     
-    const selectedTexts = selectedOptions.map(opt => opt.text).join(', ')
-    addUserMessage(`Valgt: ${selectedTexts}`)
+    const selectedTexts = selectedOptions.map(opt => opt.text.toLowerCase()).join(', ')
+    const messagePrefix = currentStep === 'skinConcern' 
+      ? 'Jeg ønsker hjelp med'
+      : currentStep === 'skinGoal'
+      ? 'Mine hudmål er'
+      : 'Valgt';
+    addUserMessage(`${messagePrefix}: ${selectedTexts}`)
     
     // Update user profile with values
     const selectedValues = selectedOptions.map(opt => opt.value)
