@@ -1,25 +1,28 @@
 {
   "clinics": [
     {
-      "id": "oslo",
-      "name": "Eger Clinic Oslo",
-      "image": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400&h=300&fit=crop",
-      "address": "Bygdøy Allé 23, 0262 Oslo",
-      "bookingUrl": "https://egerskinclinic.no/book-oslo"
+      "id": "karl-johan",
+      "name": "Eger Clinic Karl Johan",
+      "address": "Øvre Slottsgate 27, 0157 Oslo",
+      "phone": "22 33 60 60",
+      "image": "https://egerskinclinic.no/wp-content/uploads/2024/10/IMG_4776.jpg",
+      "bookingUrl": "https://egerskinclinic.no/kontakt/"
     },
     {
-      "id": "bergen",
-      "name": "Eger Clinic Bergen",
-      "image": "https://images.unsplash.com/photo-1629909615184-74f495363b67?w=400&h=300&fit=crop",
-      "address": "Torgallmenningen 8, 5014 Bergen",
-      "bookingUrl": "https://egerskinclinic.no/book-bergen"
+      "id": "sandvika",
+      "name": "Eger Clinic Sandvika", 
+      "address": "Claude Monets allé 2, 1338 Sandvika",
+      "phone": "902 57 677",
+      "image": "https://egerskinclinic.no/wp-content/uploads/2024/12/IMG_6342.jpg",
+      "bookingUrl": "https://egerskinclinic.no/kontakt/"
     },
     {
-      "id": "stavanger",
-      "name": "Eger Clinic Stavanger",
-      "image": "https://images.unsplash.com/photo-1631248055158-80f74d121224?w=400&h=300&fit=crop",
-      "address": "Klubbgata 5, 4006 Stavanger",
-      "bookingUrl": "https://egerskinclinic.no/book-stavanger"
+      "id": "majorstuen",
+      "name": "Eger Clinic Majorstuen",
+      "address": "Sørkedalsveien 10, 0369 Oslo",
+      "phone": "23 21 54 00",
+      "image": "https://egerskinclinic.no/wp-content/uploads/2023/03/Eger-Majorstuen.jpeg",
+      "bookingUrl": "https://egerskinclinic.no/kontakt/"
     }
   ]
 }
