@@ -6,6 +6,8 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import treatmentCatalog from '@/data/treatment-catalog.json'
 import chatFlow from '@/data/chatbot-flow.json'
 
+type ChatFlowStep = keyof typeof chatFlow.flow
+
 interface Message {
   id: string
   type: 'user' | 'bot'
@@ -46,7 +48,7 @@ export default function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
   const [isTyping, setIsTyping] = useState(false)
-  const [currentStep, setCurrentStep] = useState('introduce')
+  const [currentStep, setCurrentStep] = useState<ChatFlowStep>('introduce')
   const [userProfile, setUserProfile] = useState<UserProfile>({
     concerns: [],
     goals: []
@@ -109,9 +111,9 @@ export default function ChatBot() {
     setShowChat(true)
     
     setTimeout(() => {
-      const nextStepId = chatFlow.flow[currentStep].next
-      if (nextStepId) {
-        processNextStep(nextStepId)
+      const currentFlowStep = chatFlow.flow[currentStep]
+      if ('next' in currentFlowStep && currentFlowStep.next) {
+        processNextStep(currentFlowStep.next)
       }
     }, 1000)
   }
@@ -138,24 +140,24 @@ export default function ChatBot() {
   }
 
   const processNextStep = (nextStep: string) => {
-    const step = chatFlow.flow[nextStep]
+    const step = chatFlow.flow[nextStep as ChatFlowStep]
     if (!step) {
       generateRecommendations()
       return
     }
     
-    setCurrentStep(nextStep)
+    setCurrentStep(nextStep as ChatFlowStep)
     
-    if (step.type === 'recommendation' || nextStep === 'recommendation') {
+    if ('type' in step && step.type === 'recommendation' || nextStep === 'recommendation') {
       generateRecommendations()
-    } else if (step.type === 'multiSelect') {
+    } else if ('type' in step && step.type === 'multiSelect') {
       // For multi-select, we'll handle it differently
       setShowChat(false)
       setIsTyping(false)
-    } else {
-      addBotMessage(step.message, step.options)
+    } else if ('message' in step) {
+      addBotMessage(step.message, 'options' in step ? step.options : undefined)
       // If there's a next step defined and no options, continue
-      if (step.next && !step.options) {
+      if ('next' in step && step.next && !('options' in step)) {
         setTimeout(() => processNextStep(step.next), 1500)
       }
     }
@@ -312,8 +314,9 @@ Ring oss for en uforpliktende konsultasjon:
   }
 
   // Multi-select screen
-  if (!showChat && chatFlow.flow[currentStep]?.type === 'multiSelect') {
-    const step = chatFlow.flow[currentStep]
+  const currentStepData = chatFlow.flow[currentStep]
+  if (!showChat && currentStepData && 'type' in currentStepData && currentStepData.type === 'multiSelect') {
+    const step = currentStepData
     return (
       <div className="w-full max-w-md min-h-[80vh] flex flex-col font-[family-name:var(--font-geist-sans)]">
         {/* Header */}
@@ -336,7 +339,7 @@ Ring oss for en uforpliktende konsultasjon:
           </div>
           
           <h2 className="text-2xl font-normal text-stone-800 mb-3 text-center">
-            {step.message}
+            {'message' in step ? step.message : ''}
           </h2>
           <p className="text-stone-500 font-light text-sm text-center">
             Velg alle som passer
@@ -345,7 +348,7 @@ Ring oss for en uforpliktende konsultasjon:
         
         {/* Options */}
         <div className="flex-1 px-6 py-2 space-y-3 overflow-y-auto">
-          {step.options?.map((option, idx) => (
+          {'options' in step && step.options?.map((option, idx) => (
             <button
               key={idx}
               onClick={() => toggleOption(option.value)}
