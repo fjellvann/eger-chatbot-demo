@@ -136,16 +136,32 @@ export default function ChatBot() {
   }
 
   const processUserChoice = (option: Option) => {
-    setIsTyping(true)
+    // Check if next step is multiSelect to avoid showing typing indicator
+    const nextStepData = option.next ? chatFlow.flow[option.next as ChatFlowStep] : null
+    const isNextStepMultiSelect = nextStepData && 'type' in nextStepData && nextStepData.type === 'multiSelect'
+    
+    // Only show typing indicator if next step is not multiSelect
+    if (!isNextStepMultiSelect) {
+      setIsTyping(true)
+    }
     
     // Update user profile based on current step
     updateUserProfile(option.value)
     
-    setTimeout(() => {
+    // Process next step immediately for multiSelect, with delay for others
+    if (isNextStepMultiSelect) {
+      // Process immediately without delay for multiSelect
       if (option.next) {
         processNextStep(option.next)
       }
-    }, 1000)
+    } else {
+      // Normal delay for other step types
+      setTimeout(() => {
+        if (option.next) {
+          processNextStep(option.next)
+        }
+      }, 1000)
+    }
   }
 
   const processNextStep = (nextStep: string) => {
@@ -296,7 +312,16 @@ Ring oss for en uforpliktende konsultasjon:
                   content: option.text,
                   timestamp: new Date()
                 }])
-                setShowChat(true)
+                
+                // Check if next step is multiSelect before showing chat
+                const nextStepData = option.next ? chatFlow.flow[option.next as ChatFlowStep] : null
+                const isNextStepMultiSelect = nextStepData && 'type' in nextStepData && nextStepData.type === 'multiSelect'
+                
+                // Only show chat if next step is not multiSelect
+                if (!isNextStepMultiSelect) {
+                  setShowChat(true)
+                }
+                
                 processUserChoice(option)
               }}
               className="w-full text-left px-6 py-4 bg-stone-50 border border-stone-200 rounded-full hover:bg-amber-50 hover:border-amber-200 transition-all duration-200 text-stone-700 font-light"
