@@ -53,7 +53,7 @@ export default function ChatBot() {
     concerns: [],
     goals: []
   })
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
+  const [selectedOptions, setSelectedOptions] = useState<{value: string, text: string}[]>([])
   const [showChat, setShowChat] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -105,14 +105,15 @@ export default function ChatBot() {
   const handleMultiSelect = () => {
     if (selectedOptions.length === 0) return
     
-    const selectedTexts = selectedOptions.join(', ')
+    const selectedTexts = selectedOptions.map(opt => opt.text).join(', ')
     addUserMessage(`Valgt: ${selectedTexts}`)
     
-    // Update user profile
+    // Update user profile with values
+    const selectedValues = selectedOptions.map(opt => opt.value)
     if (currentStep === 'skinConcern') {
-      setUserProfile(prev => ({ ...prev, concerns: selectedOptions }))
+      setUserProfile(prev => ({ ...prev, concerns: selectedValues }))
     } else if (currentStep === 'skinGoal') {
-      setUserProfile(prev => ({ ...prev, goals: selectedOptions }))
+      setUserProfile(prev => ({ ...prev, goals: selectedValues }))
     }
     
     setSelectedOptions([])
@@ -127,11 +128,11 @@ export default function ChatBot() {
     }, 1000)
   }
 
-  const toggleOption = (value: string) => {
+  const toggleOption = (option: {value: string, text: string}) => {
     setSelectedOptions(prev => 
-      prev.includes(value) 
-        ? prev.filter(v => v !== value)
-        : [...prev, value]
+      prev.some(opt => opt.value === option.value)
+        ? prev.filter(opt => opt.value !== option.value)
+        : [...prev, option]
     )
   }
 
@@ -387,15 +388,15 @@ Ring oss for en uforpliktende konsultasjon:
           {'options' in step && step.options?.map((option, idx) => (
             <button
               key={idx}
-              onClick={() => toggleOption(option.value)}
+              onClick={() => toggleOption({value: option.value, text: option.text})}
               className={`w-full text-left px-6 py-4 rounded-full transition-all duration-200 font-light flex items-center justify-between ${
-                selectedOptions.includes(option.value)
+                selectedOptions.some(opt => opt.value === option.value)
                   ? 'bg-stone-50 border-2 border-blue-500 text-stone-800'
                   : 'bg-stone-50 border border-stone-200 text-stone-700 hover:bg-amber-50 hover:border-amber-200'
               }`}
             >
               <span>{option.text}</span>
-              {selectedOptions.includes(option.value) && (
+              {selectedOptions.some(opt => opt.value === option.value) && (
                 <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
                   <span className="text-white text-xs font-bold">✓</span>
                 </div>
